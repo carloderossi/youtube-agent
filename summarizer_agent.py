@@ -3,7 +3,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
 from langchain_core.runnables import RunnableLambda
 from config_loader import load_config
-from langchain_community.llms import Ollama
+from langchain_ollama import OllamaLLM
 
 
 config = load_config()
@@ -11,7 +11,11 @@ config = load_config()
 # LLM selection
 if config.llm.provider == "ollama":
     from langchain_community.llms import Ollama
-    llm = Ollama(model=config.llm.model, temperature=config.llm.temperature)
+    # llm = Ollama(model=config.llm.model, temperature=config.llm.temperature) # OLD style, deprecated
+    llm = OllamaLLM(
+    model=config.llm.model,
+    temperature=config.llm.temperature,
+)
 
 else:
     from langchain_openai import ChatOpenAI
