@@ -3,6 +3,8 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableSequence
 from langchain_core.runnables import RunnableLambda
 from config_loader import load_config
+from langchain_community.llms import Ollama
+
 
 config = load_config()
 
@@ -10,6 +12,7 @@ config = load_config()
 if config.llm.provider == "ollama":
     from langchain_community.llms import Ollama
     llm = Ollama(model=config.llm.model, temperature=config.llm.temperature)
+
 else:
     from langchain_openai import ChatOpenAI
     llm = ChatOpenAI(model=config.openai.model, temperature=config.llm.temperature)
