@@ -5,6 +5,8 @@ from langchain_core.runnables import RunnableLambda
 from config_loader import load_config
 from langchain_ollama import OllamaLLM
 
+#uv run streamlit run app.py
+
 
 config = load_config()
 
