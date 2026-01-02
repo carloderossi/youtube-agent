@@ -1,13 +1,13 @@
 llm:
   provider: "ollama"        # "ollama" or "openai"
-  model: "qwen3:1.7b"
-  temperature: 0
+  model: "qwen3:1.7b"     # Model name for the selected provider
+  temperature: 0         # Sampling temperature
 
 openai:
-  model: "gpt-4o-mini"
+  model: "gpt-4o-mini"  # OpenAI model name
 
 youtube:
-  add_video_info: true
+  add_video_info:   
 
 deep_search:
   enabled: false
