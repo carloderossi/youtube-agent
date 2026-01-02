@@ -10,7 +10,6 @@ config = load_config()
 
 # LLM selection
 if config.llm.provider == "ollama":
-    from langchain_community.llms import Ollama
     # llm = Ollama(model=config.llm.model, temperature=config.llm.temperature) # OLD style, deprecated
     llm = OllamaLLM(
     model=config.llm.model,
