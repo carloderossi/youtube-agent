@@ -1,0 +1,15 @@
+llm:
+  provider: "ollama"        # "ollama" or "openai"
+  model: "qwen3:1.7b"
+  temperature: 0
+
+openai:
+  model: "gpt-4o-mini"
+
+youtube:
+  add_video_info: true
+
+deep_search:
+  enabled: false
+  max_results: 20
+  highlight_youtube: true
