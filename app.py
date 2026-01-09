@@ -8,7 +8,7 @@ config = load_config()
 st.title("🎬 YouTube Summarizer + Deep Search (LangChain 1.1.2)")
 
 url = st.text_input("YouTube URL")
-enable_deep = st.checkbox("Enable Deep Search", value=config.deep_search.enabled)
+enable_deep = st.checkbox("Enable Deep Search", value=config.deep_search.enabled,disabled=True)
 
 if st.button("Run"):
     if not url.strip():
