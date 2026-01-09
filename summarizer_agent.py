@@ -5,10 +5,20 @@ from langchain_core.runnables import RunnableLambda
 from config_loader import load_config
 from langchain_ollama import OllamaLLM
 
+import httpx
+from langchain_core.exceptions import OutputParserException
+
 #uv run streamlit run app.py
 
-
 config = load_config()
+
+def is_ollama_running(host: str = "http://localhost:11434") -> bool:
+    """Quick health check to see if Ollama is reachable."""
+    try:
+        r = httpx.get(f"{host}/api/tags", timeout=1.0)
+        return r.status_code == 200
+    except Exception:
+        return False
 
 # LLM selection
 if config.llm.provider == "ollama":
@@ -68,7 +78,30 @@ topic_extractor = (
 )
 
 def summarize_youtube(url: str):
-    return summarizer.invoke(url) #.content
+    # 1. Check if Ollama is running BEFORE invoking the chain
+    if not is_ollama_running():
+        return (
+            "❌ Ollama is not running.\n\n"
+            "Please start Ollama first (e.g., run `ollama serve`) "
+            "and then try again."
+        )
+
+    # 2. Try running the summarizer
+    try:
+        return summarizer.invoke(url)
+
+    except httpx.ConnectError:
+        return (
+            "❌ Could not connect to Ollama.\n\n"
+            "Make sure Ollama is running and accessible at `localhost:11434`."
+        )
+
+    except OutputParserException as e:
+        return f"⚠️ The model returned an unexpected output format:\n{e}"
+
+    except Exception as e:
+        return f"⚠️ Unexpected error while summarizing:\n{e}"
+
 
 def extract_topic(summary: str):
     return topic_extractor.invoke(summary) #.content

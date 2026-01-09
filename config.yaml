@@ -7,7 +7,7 @@ openai:
   model: "gpt-4o-mini"  # OpenAI model name
 
 youtube:
-  add_video_info:   
+  add_video_info: false  
 
 deep_search:
   enabled: false
